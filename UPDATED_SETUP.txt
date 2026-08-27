@@ -1,0 +1,34 @@
+GOVI NETHA LK — FINAL NON-AI BUILD
+
+මෙම release එකේ AI / Govi Helper / Telegram AI / Firebase Functions intentionally remove කර ඇත.
+AI එක පසුව වෙනම phase එකකදී නැවත add කරන්න.
+
+FINAL UI:
+- Warm cream + wheat gold + olive green visual system
+- Mobile-first responsive layout
+- New homepage hero + agriculture illustration
+- Clean navigation + mobile menu
+- Dashboard/admin/service pages share the same design system
+
+MAIN FUNCTIONALITY:
+- Firebase Authentication
+- Firestore
+- Cloudinary image/video uploads
+- Leaflet maps
+- Open-Meteo weather
+- Admin approval, bookings, ads, stats/content
+
+DEPLOY:
+- GitHub Pages: upload the govi-netha-lk folder contents to the repository.
+- Firebase Hosting: firebase deploy --only hosting
+
+AI is intentionally NOT included in this build.
+
+
+UPDATE 2 — IMPORTANT
+1. Firebase Console -> Firestore Database -> Rules: this ZIP now includes firestore.rules. If you deploy with Firebase CLI, firebase.json is configured to deploy the rules.
+2. Google Login: first login asks for name + phone once and saves them in users/{uid}; no OTP is used for Google login.
+3. Chat photos and Gig photos use the existing Cloudinary unsigned preset already configured in js/gigs.js.
+4. Live tracking requires the business/driver phone browser to keep the site open and Location permission enabled.
+5. Booking PDF uses html2pdf.js from CDN, so an internet connection is required when downloading the PDF.
+6. Home social logos use the three Google Drive image IDs supplied in Update 2. Admin can replace logo URLs and destination links under Admin -> Social & Chat Links.

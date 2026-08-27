@@ -1,0 +1,268 @@
+<!doctype html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ගොවි නෙත LK | Home</title><script>document.documentElement.dataset.theme=localStorage.getItem("goviTheme")||"light";</script><link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<meta name="theme-color" content="#0b7a3b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ගොවි නෙත">
+</head><body><div id="siteHeader"></div>
+<div class="home-top-ad"><div class="container"><div class="ad-slot empty" id="adSlot"><div><b>📢 දැන්වීම් සඳහා ඉඩ</b><br><small>මෙතැනට sponsor / business advertisement banner එකක් දාන්න පුළුවන්.</small></div></div></div></div>
+<main>
+<section class="hero hero-farm">
+  <div class="container hero-grid-new">
+    <div class="hero-copy">
+      <span class="eyebrow">🌱 ශ්‍රී ලංකාව වටා  ගොවි සේවා එකම තැනකින්</span>
+      <h1>ගොවි නෙත <br><span>agri culture </span></h1>
+      <p>ඔබට අවශ්‍ය tractor, harvester සහ අනෙකුත් කෘෂි සේවා ඔබට ආසන්න ප්‍රදේශයෙන් සොයාගෙන පහසුවෙන් booking කරන්න.</p>
+      <div class="hero-cta">
+        <button class="btn primary hero-main-btn" type="button" id="heroServiceFinderBtn" aria-expanded="false" aria-controls="heroServiceMenu">සේවාවක් සොයන්න <span>→</span></button>
+        <a class="btn outline hero-second-btn" href="javascript:void(0)" id="addServiceBtn">+ සේවාවක් එක් කරන්න</a>
+      </div>
+      <div class="hero-service-menu" id="heroServiceMenu" aria-hidden="true">
+        <div class="hero-service-menu-title">🔎 ඔබට අවශ්‍ය සේවාව තෝරන්න</div>
+        <div class="hero-service-menu-grid">
+          <a class="hero-service-link" href="pages/ploughing.html"><span class="svc-icon">🚜</span><span>සීසෑම</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/harvesting.html"><span class="svc-icon">🌾</span><span>අස්වනු නෙලීම</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/extras.html?sub=accommodation"><span class="svc-icon">🏠</span><span>නවාතැන් පහසුකම්</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/extras.html?sub=food"><span class="svc-icon">🍛</span><span>ආහාර පාන</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/extras.html?sub=fuel"><span class="svc-icon">⛽</span><span>ඉංධන වෙළදාම</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/extras.html?sub=parts"><span class="svc-icon">⚙️</span><span>අමතර කොටස් (ටැක්ටර් / හාවේස්ටර්)</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/extras.html?sub=mechanic"><span class="svc-icon">🔧</span><span>මැකෑනික් සේවා</span><span class="svc-arrow">→</span></a>
+          <a class="hero-service-link" href="pages/extras.html"><span class="svc-icon">🧰</span><span>සියලුම අමතර සේවා</span><span class="svc-arrow">→</span></a>
+        </div>
+      </div>
+      <div class="hero-trust">
+        <span>✓ Verified service providers</span>
+        <span>📍 Location based</span>
+        <span>📅 Easy booking</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="farm-image-card">
+        <img src="https://lh3.googleusercontent.com/d/179qHw5pXVsI7yc-uoH3li1a8KM9KMDus" alt="ගොවි නෙත කෘෂි සේවා">
+        <div class="growth-pill"><span>🌱</span><b>Smart Farming</b><small>සේවාවන් පහසුවෙන් සොයන්න</small></div>
+        <div class="moisture-pill"><span>💧</span><b>24/7</b><small>සේවා සෙවීම</small></div>
+      </div>
+      <div class="floating-weather">
+        <span class="weather-dot">🌞</span><div><b>කාලගුණය</b><small>ඔබේ ප්‍රදේශය අනුව</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="weather-section"><div class="container">
+  <div class="weather-search-panel">
+    <form id="homeWeatherSearchForm" class="weather-search-form">
+      <div class="weather-search-title"><span>🌦️</span><div><b>දිස්ත්‍රික්ක / ප්‍රදේශ / ගම් වල කාලගුණය බලන්න</b><small>ඔබට අවශ්‍ය ස්ථානය type කර සෙවීමෙන් live weather බලන්න.</small></div></div>
+      <div class="weather-search-row"><input id="homeWeatherSearchInput" autocomplete="off" placeholder="උදා: කොළඹ, අම්පාර, මහඔය, ගම්පහ..."><button class="btn primary" type="submit">🔎 සොයන්න</button><button class="btn light" type="button" id="homeWeatherLocationBtn">📍 Live Location</button></div>
+      <div id="homeWeatherSuggestions" class="weather-suggestions hidden"></div>
+    </form>
+  </div>
+  <div class="weather-glass" id="homeWeatherCard"><div class="weather-loading">⛅ කාලගුණ දත්ත load වෙමින්...</div></div>
+  <div class="advisory-card hidden" id="homeWeatherAdvisory"></div>
+</div></section>
+<div class="stats"><div class="stat"><b id="statUsers">1,250+</b><span>ලියාපදිංචි පරිශීලකයන්</span></div><div class="stat"><b id="statServices">380+</b><span>ලියාපදිංචි සේවා</span></div><div class="stat"><b id="statAreas">25+</b><span>ප්‍රදේශ</span></div><div class="stat"><b id="statSupport">24/7</b><span>සේවා සෙවීම</span></div></div></div>
+
+
+<section class="section service-finder-section"><div class="container"><div class="section-title"><h2>🔎 සේවා සොයන්න</h2><p>ඔබට අවශ්‍ය සේවාව තෝරලා ඔබට ආසන්න සේවා සපයන්නන් සොයන්න.</p></div>
+  <div class="service-finder-grid">
+    <a class="big-btn" href="pages/ploughing.html"><div class="icon">🚜</div><h3>සීසෑම</h3><p>Tractor / සීසෑමේ සේවා</p></a>
+    <a class="big-btn" href="pages/harvesting.html"><div class="icon">🌾</div><h3>අස්වනු නෙලීම</h3><p>Harvester / අස්වනු සේවා</p></a>
+    <div class="big-btn extras-finder-card">
+      <div class="icon">🧰</div><h3>අමතර සේවා</h3><p>ගොවියාට අවශ්‍ය අනෙකුත් සේවා</p>
+      <div class="extras-links">
+        <a href="pages/extras.html?sub=accommodation">🏠 නවාතැන් පහසුකම්</a>
+        <a href="pages/extras.html?sub=food">🍛 ආහාර පාන</a>
+        <a href="pages/extras.html?sub=fuel">⛽ ඉංධන වෙළදාම</a>
+        <a href="pages/extras.html?sub=parts">⚙️ අමතර කොටස් (ටැක්ටර් / හාවේස්ටර්)</a>
+        <a href="pages/extras.html?sub=mechanic">🔧 මැකෑනික් සේවා</a>
+      </div>
+      <a class="btn primary extras-all-btn" href="pages/extras.html">සියලුම අමතර සේවා →</a>
+    </div>
+  </div>
+</div></section>
+<section class="section"><div class="container info-grid"><div class="card"><h3>🌱 ගොවි නෙත ගැන</h3><p id="aboutText">ගොවීන්ට අවශ්‍ය කෘෂි යන්ත්‍ර සහ අනෙකුත් සේවා පහසුවෙන් සොයාගැනීමට, ප්‍රදේශය අනුව තෝරාගැනීමට සහ booking කිරීමට නිර්මාණය කරන ලද digital platform එකකි.</p></div><div class="card"><h3>👨‍💻 නිර්මාණකරුවන්</h3><p id="creatorsText">මෙම Web & Mobile Application එක සංවර්ධනය කරන කණ්ඩායම සහ developer information මෙතැනින් පෙන්විය හැක.</p><a class="btn light" href="pages/about.html">Developer / About</a></div></div></section></main>
+<div id="socialFloat" class="social-float" aria-label="Social links"></div><footer id="siteFooter"></footer><div id="toast" class="toast"></div><script src="js/header.js"></script><script src="js/app.js"></script><script type="module">
+import { listenSocialSettings } from "./js/settings.js";
+listenSocialSettings(s=>{
+  const el=document.getElementById("socialFloat"); if(!el)return;
+  const items=[["whatsappUrl","whatsappLogo","WhatsApp"],["youtubeUrl","youtubeLogo","YouTube"],["facebookUrl","facebookLogo","Facebook"]];
+  el.innerHTML=items.filter(x=>s[x[0]]).map(x=>`<a href="${s[x[0]]}" target="_blank" rel="noopener" title="${x[2]}"><img src="${s[x[1]]}" alt="${x[2]}"></a>`).join("");
+});
+</script>
+<script type="module">
+import { initHomeWeather } from "./js/weather.js";
+initHomeWeather();
+</script>
+<script>
+document.getElementById('addServiceBtn')?.addEventListener('click', () => {
+  const loggedIn = !!JSON.parse(localStorage.getItem('goviFirebaseUser') || 'null');
+  window.location.href = loggedIn ? 'dashboard.html#post' : 'login.html?next=dashboard.html%23post';
+});
+</script>
+<script type="module">
+import { listenActiveAds } from "./js/ads.js";
+import { listenSiteStats, listenSiteContent } from "./js/settings.js";
+// Homepage counters (👤 users / 🔧 services / 📍 areas / ⏰ support) — Admin editable,
+// updates live for every visitor the moment Admin saves new numbers.
+listenSiteStats((s) => {
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('statUsers', s.users);
+  set('statServices', s.services);
+  set('statAreas', s.areas);
+  set('statSupport', s.support);
+});
+// "ගොවි නෙත ගැන" (About) and "නිර්මාණකරුවන්" (Creators) card text — Admin editable from
+// admin.html, updates live for every visitor the moment Admin saves, same live pattern as stats.
+listenSiteContent((c) => {
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('aboutText', c.aboutText);
+  set('creatorsText', c.creatorsText);
+});
+// Live rotating Ads — Active ads are ordered by Admin's Play Order.
+// Each ad gets its own timer; when it expires the next ad plays automatically.
+let __homeAds = [], __adIndex = 0, __adTimer = null, __currentAdId = null;
+function __sortHomeAds(ads) {
+  return [...ads].sort((a, b) => {
+    const ao = Number.isFinite(Number(a.order)) ? Number(a.order) : Number.MAX_SAFE_INTEGER;
+    const bo = Number.isFinite(Number(b.order)) ? Number(b.order) : Number.MAX_SAFE_INTEGER;
+    if (ao !== bo) return ao - bo;
+    const at = a.createdAt?.toMillis?.() ?? 0;
+    const bt = b.createdAt?.toMillis?.() ?? 0;
+    if (at !== bt) return at - bt;
+    return String(a.id || '').localeCompare(String(b.id || ''));
+  });
+}
+function renderHomeAd(ad, animate = true) {
+  const slot = document.getElementById('adSlot');
+  if (!slot) return;
+
+  if (!ad) {
+    slot.className = 'ad-slot empty';
+    slot.innerHTML = '<div><b>📢 දැන්වීම් සඳහා ඉඩ</b><br><small>මෙතැනට sponsor / business advertisement banner එකක් දාන්න පුළුවන්.</small></div>';
+    return;
+  }
+
+  const mediaHtml = ad.mediaType === "video"
+    ? `<video src="${ad.url}" autoplay playsinline loop ${ad.muted !== false ? "muted" : ""} preload="metadata" aria-label="${ad.title || 'දැන්වීම'}"></video>`
+    : `<img src="${ad.url}" alt="${ad.title || 'දැන්වීම'}">`;
+  const mediaContent = ad.linkUrl
+    ? `<a class="ad-media-link" href="${ad.linkUrl}" target="_blank" rel="noopener">${mediaHtml}</a>`
+    : mediaHtml;
+
+  const oldStage = slot.querySelector('.ad-media-stage');
+
+  if (!animate || !oldStage) {
+    slot.className = 'ad-slot ad-live';
+    slot.innerHTML =
+      `<div class="ad-media-stage" style="--ad-fade-in:${Math.max(0, Number(ad.fadeInSeconds ?? 0.5))}s;--ad-fade-out:${Math.max(0, Number(ad.fadeOutSeconds ?? 0.5))}s"><div class="ad-media-layer is-new">${mediaContent}</div></div>` +
+      (ad.title ? `<div class="ad-caption">${ad.title}</div>` : "") +
+      `<div class="ad-progress"><span></span></div>`;
+  } else {
+    const stage = document.createElement('div');
+    stage.className = 'ad-media-stage';
+    const oldLayer = oldStage.querySelector('.ad-media-layer');
+    if (oldLayer) {
+      oldLayer.classList.add('is-old');
+      stage.appendChild(oldLayer);
+    }
+
+    const newLayer = document.createElement('div');
+    newLayer.className = 'ad-media-layer is-new';
+    newLayer.innerHTML = mediaContent;
+    const newVideo = newLayer.querySelector('video');
+    if (newVideo) { newVideo.muted = ad.muted !== false; newVideo.play().catch(() => {}); }
+    stage.appendChild(newLayer);
+
+    stage.style.setProperty('--ad-fade-in', `${Math.max(0, Number(ad.fadeInSeconds ?? 0.5))}s`);
+    stage.style.setProperty('--ad-fade-out', `${Math.max(0, Number(ad.fadeOutSeconds ?? 0.5))}s`);
+
+    slot.className = 'ad-slot ad-live ad-transition';
+    slot.replaceChildren(
+      stage,
+      ...(ad.title ? [Object.assign(document.createElement('div'), { className: 'ad-caption', textContent: ad.title })] : []),
+      Object.assign(document.createElement('div'), { className: 'ad-progress', innerHTML: '<span></span>' })
+    );
+
+    const fadeCleanupMs = (Math.max(Number(ad.fadeInSeconds ?? 0.5), Number(ad.fadeOutSeconds ?? 0.5)) * 1000) + 80;
+    setTimeout(() => {
+      if (oldLayer && oldLayer.parentElement) oldLayer.remove();
+      slot.classList.remove('ad-transition');
+    }, Math.max(80, fadeCleanupMs));
+  }
+
+  const currentVideo = slot.querySelector('.ad-media-layer.is-new video');
+  if (currentVideo) {
+    currentVideo.muted = ad.muted !== false;
+    currentVideo.play().catch(() => {});
+  }
+
+  const bar = slot.querySelector('.ad-progress span');
+  const duration = Math.max(3, Number(ad.durationSeconds) || 15) * 1000;
+  requestAnimationFrame(() => {
+    if (bar) {
+      bar.style.transition = 'none';
+      bar.style.width = '0';
+      requestAnimationFrame(() => {
+        bar.style.transition = `width ${duration}ms linear`;
+        bar.style.width = '100%';
+      });
+    }
+  });
+}
+function startAdRotation() {
+  clearTimeout(__adTimer);
+  if (!__homeAds.length) { __currentAdId = null; renderHomeAd(null); return; }
+  __adIndex = Math.max(0, Math.min(__adIndex, __homeAds.length - 1));
+  const ad = __homeAds[__adIndex];
+  __currentAdId = ad.id;
+  renderHomeAd(ad);
+  __adTimer = setTimeout(() => {
+    // Always move through the already-sorted Play Order list: 1 → 2 → 3 → … → N.
+    __adIndex = (__adIndex + 1) % __homeAds.length;
+    startAdRotation();
+  }, Math.max(3, Number(ad.durationSeconds) || 15) * 1000);
+}
+listenActiveAds((ads) => {
+  const previousId = __currentAdId;
+  __homeAds = __sortHomeAds(ads);
+
+  if (!__homeAds.length) {
+    __adIndex = 0;
+    startAdRotation();
+    return;
+  }
+
+  // Live Firestore updates must NOT randomly reset the carousel to item #1.
+  // Keep the currently playing ad if it still exists; otherwise start at the first Play Order.
+  const sameIndex = __homeAds.findIndex(a => a.id === previousId);
+  __adIndex = sameIndex >= 0 ? sameIndex : 0;
+  startAdRotation();
+});
+</script><script>document.getElementById('siteFooter').innerHTML='<div class="footer"><div class="container footer-grid"><div><h3>ගොවි නෙත LK</h3><p>ගොවි වැඩකට අවශ්‍ය සේවා සොයාගැනීම පහසු කරන Web & Mobile Application.</p></div><div><h3>සේවා</h3><p><a href="pages/ploughing.html">සී සෑම</a><br><a href="pages/harvesting.html">අස්වනු නෙලීම</a><br><a href="pages/extras.html">අමතර සේවා</a></p></div><div><h3>Account</h3><p><a href="login.html">Login</a><br><a href="dashboard.html">Dashboard</a></p></div></div><div class="container copyright">© 2026 ගොවි නෙත LK · Web & Mobile Application</div></div>';</script>\n<script>
+(function(){
+  const btn=document.getElementById('heroServiceFinderBtn');
+  const menu=document.getElementById('heroServiceMenu');
+  if(!btn||!menu) return;
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    const open=menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-hidden', String(!open));
+  });
+  document.addEventListener('click', function(e){
+    if(!menu.contains(e.target) && !btn.contains(e.target)){
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      menu.setAttribute('aria-hidden','true');
+    }
+  });
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(err => console.warn("PWA service worker:", err)));
+}
+</script>
+</body></html>

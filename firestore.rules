@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn(){ return request.auth != null; }
+    function admin(){ return signedIn() && request.auth.token.email == "slfilepodda1@gmail.com"; }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow create, update: if signedIn() && (request.auth.uid == uid || admin());
+      allow delete: if admin();
+    }
+    match /gigs/{id} {
+      allow read: if resource.data.status == "active" || (signedIn() && (resource.data.ownerId == request.auth.uid || admin()));
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if signedIn() && (resource.data.ownerId == request.auth.uid || admin());
+    }
+    match /bookings/{id} {
+      allow read: if signedIn() && (resource.data.farmerId == request.auth.uid || resource.data.ownerId == request.auth.uid || admin());
+      allow create: if signedIn() && request.resource.data.farmerId == request.auth.uid;
+      allow update, delete: if signedIn() && (resource.data.farmerId == request.auth.uid || resource.data.ownerId == request.auth.uid || admin());
+    }
+    match /settings/{id} {
+      allow read: if true;
+      allow write: if admin();
+    }
+    match /ads/{id} {
+      allow read: if true;
+      allow write: if admin();
+    }
+    match /notifications/{id} {
+      allow read, update: if signedIn() && (resource.data.userId == request.auth.uid || admin());
+      allow create: if signedIn();
+      allow delete: if admin();
+    }
+    match /chatThreads/{tid} {
+      allow read, create, update: if signedIn() && (tid == "user_" + request.auth.uid || admin());
+      allow delete: if admin();
+      match /messages/{mid} {
+        allow read, create: if signedIn() && (tid == "user_" + request.auth.uid || admin());
+        allow update, delete: if admin();
+      }
+    }
+    match /todayWorks/{id} {
+      allow read: if signedIn();
+      allow create, update: if signedIn() && (request.resource.data.ownerId == request.auth.uid || admin());
+      allow delete: if signedIn() && (resource.data.ownerId == request.auth.uid || admin());
+    }
+    match /deactivatedAccounts/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow create, update, delete: if admin();
+    }
+    match /renewalRequests/{id} {
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow read: if signedIn() && (resource.data.ownerId == request.auth.uid || admin());
+      allow update: if admin();
+      allow delete: if admin();
+    }
+    match /adminNotifications/{id} {
+      allow read, update: if admin();
+      allow create: if signedIn();
+      allow delete: if admin();
+    }
+  }
+}

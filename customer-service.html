@@ -1,0 +1,37 @@
+<!doctype html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ගොවි නෙත | Customer Service</title><script>document.documentElement.dataset.theme=localStorage.getItem("goviTheme")||"light";</script><link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<meta name="theme-color" content="#0b7a3b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ගොවි නෙත">
+</head><body>
+<div id="siteHeader"></div><main class="section"><div class="container" style="max-width:900px">
+<div class="section-title"><h1>💬 Customer Service</h1><p>ඕනෑම ප්‍රශ්නයක් Admin සමඟ direct live chat කරන්න. Photo එකක් දාලත් අහන්න පුළුවන්.</p></div>
+<div id="guestChatNotice" class="notice hidden">Chat කරන්න <a href="login.html?next=customer-service.html">Login</a> වෙන්න.</div>
+<div class="chat-box card"><div id="customerChatMessages" class="chat-messages"></div>
+<form id="customerChatForm" class="chat-compose"><input id="customerChatText" placeholder="ඔබේ ප්‍රශ්නය ලියන්න..." autocomplete="off"><input id="customerChatPhoto" type="file" accept="image/*" hidden><button class="btn light" type="button" id="customerChatPhotoBtn">📷 Photo</button><button class="btn primary">Send</button></form></div>
+</div></main><div id="toast" class="toast"></div>
+<script src="js/header.js"></script><script src="js/app.js"></script><script type="module">
+import {auth,onAuthStateChanged} from "./js/firebase-config.js";
+import {sendAdminMessage,listenAdminChat,renderChatMessages} from "./js/chat.js";
+const $=s=>document.querySelector(s);
+function upload(file){const fd=new FormData();fd.append("file",file);fd.append("upload_preset","p0luehws");fd.append("folder",`chat/${auth.currentUser.uid}`);return fetch("https://api.cloudinary.com/v1_1/favfuhcn/image/upload",{method:"POST",body:fd}).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.error?.message||"Photo upload failed");return d.secure_url;});}
+onAuthStateChanged(auth,u=>{
+ if(!u){$("#guestChatNotice")?.classList.remove("hidden");return;}
+ $("#guestChatNotice")?.classList.add("hidden"); listenAdminChat(u.uid,m=>renderChatMessages($("#customerChatMessages"),m));
+});
+$("#customerChatPhotoBtn")?.addEventListener("click",()=>$("#customerChatPhoto")?.click());
+$("#customerChatForm")?.addEventListener("submit",async e=>{
+ e.preventDefault();if(!auth.currentUser)return location.href="login.html?next=customer-service.html";
+ const text=$("#customerChatText").value.trim(),f=$("#customerChatPhoto").files?.[0];if(!text&&!f)return;
+ try{const imageUrl=f?await upload(f):"";await sendAdminMessage(text,imageUrl);$("#customerChatText").value="";$("#customerChatPhoto").value="";}catch(err){alert(err.message);}
+});
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(err => console.warn("PWA service worker:", err)));
+}
+</script>
+</body></html>

@@ -1,0 +1,743 @@
+
+<!doctype html>
+<html lang="si">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ගොවි නෙත | Dashboard</title>
+
+<script>
+document.documentElement.dataset.theme=localStorage.getItem("goviTheme")||"light";
+</script>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<meta name="theme-color" content="#0b7a3b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ගොවි නෙත">
+</head>
+
+<body>
+
+<div id="siteHeader"></div>
+
+<div id="dashboardMobileMenu" class="dashboard-mobile-menu" aria-label="Dashboard menu">
+
+  <div class="dashboard-mobile-profile">
+    <img id="mobileDashAvatar" class="avatar" src="" alt="Profile photo">
+    <div>
+      <b id="mobileDashName">User</b>
+      <span class="role-pill" id="mobileRoleLabel">-</span>
+    </div>
+  </div>
+
+  <div class="dashboard-mobile-links">
+    <a class="dashboard-mobile-link active" data-tab="home">📊 Overview</a>
+    <a class="dashboard-mobile-link" data-tab="bookings">📅 My Bookings</a>
+    <a class="dashboard-mobile-link" data-tab="mygigs">🚜 My Gigs</a>
+    <a class="dashboard-mobile-link" data-tab="post">➕ Post a Gig</a>
+    <a class="dashboard-mobile-link" data-tab="orders">📥 Orders</a>
+    <a class="dashboard-mobile-link" data-tab="today">📍 Today Works</a>
+    <a class="dashboard-mobile-link" data-tab="notifications">🔔 Notifications</a>
+    <a class="dashboard-mobile-link" data-tab="chat">💬 Live Chat</a>
+    <a class="dashboard-mobile-link" href="index.html">🏠 Home</a>
+    <a class="dashboard-mobile-link" id="dashboardAdminLink" href="admin.html">👨‍💼 Admin Dashboard</a>
+    <a class="dashboard-mobile-link logout" href="javascript:void(0)" id="dashboardMobileLogout">🚪 Logout</a>
+  </div>
+
+</div>
+
+<div class="container dash">
+
+  <aside class="sidebar">
+
+    <div class="profile-box">
+      <img id="dashAvatar" class="avatar" src="" alt="Profile photo">
+      <b id="dashName">User</b>
+      <span class="role-pill" id="roleLabelSmall">-</span>
+    </div>
+
+    <nav class="side-nav">
+      <a class="side-link active" data-tab="home">📊 Overview</a>
+      <a class="side-link" data-tab="bookings">📅 My Bookings</a>
+      <a class="side-link" data-tab="mygigs">🚜 My Gigs</a>
+      <a class="side-link" data-tab="post">➕ Post a Gig</a>
+      <a class="side-link" data-tab="orders">📥 Orders</a>
+      <a class="side-link" data-tab="today">📍 Today Works</a>
+      <a class="side-link" data-tab="notifications">
+        🔔 Notifications
+        <span id="notificationBadge" class="notification-badge" hidden>0</span>
+      </a>
+      <a class="side-link" data-tab="chat">💬 Live Chat</a>
+      <a class="side-link" href="index.html">🏠 Home</a>
+      <a class="side-link" style="color:#ffb4b4" onclick="logoutFirebase()">🚪 Logout</a>
+    </nav>
+
+  </aside>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <section class="tab-panel" id="tab-home">
+
+      <h1 style="color:#33d896">Dashboard</h1>
+
+      <div class="panel-grid">
+
+        <div class="stat">
+          <span class="stat-icon">📅</span>
+          <b id="statBookings">0</b>
+          <span>My Bookings</span>
+        </div>
+
+        <div class="stat">
+          <span class="stat-icon">🚜</span>
+          <b id="statGigs">0</b>
+          <span>My Gigs</span>
+        </div>
+
+        <div class="stat">
+          <span class="stat-icon">📥</span>
+          <b id="statOrders">0</b>
+          <span>Pending Orders</span>
+        </div>
+
+      </div>
+
+      <div class="notice" style="margin-top:16px">
+        👋 ඔබේ role: <b id="roleLabel">-</b> —
+        ඕනෑම කෙනෙකුට "Post a Gig" එකෙන් සී සෑම / අස්වනු නෙලීම / අමතර සේවා gig එකක් දාන්න පුළුවන්.
+      </div>
+
+    </section>
+
+
+    <!-- BOOKINGS -->
+    <section class="tab-panel hidden" id="tab-bookings">
+
+      <h2 style="color:#33d896">📅 My Bookings</h2>
+
+      <div id="bookingList" class="list"></div>
+
+    </section>
+
+
+    <!-- MY GIGS -->
+    <section class="tab-panel hidden" id="tab-mygigs">
+
+      <h2 style="color:#33d896">🚜 My Gigs</h2>
+
+      <p class="notice">
+        ⏳ Admin approve කළ Gig එකකට සාමාන්‍යයෙන් දින 10ක Active කාලයක්.
+        Expire වුණාම payment proof upload කර Renew Request කරන්න.
+      </p>
+
+      <div id="myGigsList" class="list"></div>
+
+    </section>
+
+
+    <!-- POST GIG -->
+    <section class="tab-panel hidden" id="tab-post">
+
+      <h2 style="color:#33d896">➕ අලුත් Gig එකක් දාන්න</h2>
+
+      <div class="card">
+
+        <form id="gigForm">
+
+          <div class="field">
+            <label>සේවා වර්ගය</label>
+
+            <select id="gCategory">
+              <option value="ploughing">🚜 සී සෑම</option>
+              <option value="harvesting">🌾 අස්වනු නෙලීම</option>
+              <option value="extras">🔧 අමතර සේවා</option>
+            </select>
+          </div>
+
+
+          <div class="field" id="gSubWrap">
+
+            <label>අමතර සේවා වර්ගය</label>
+
+            <select id="gSub">
+              <option value="accommodation">නවාතැන් පහසුකම්</option>
+              <option value="food">ආහාර පාන</option>
+              <option value="fuel">ඉන්ධන ගෙනැවිත් වෙළදාම</option>
+              <option value="parts">අමතර කොටස් වෙළදාම</option>
+              <option value="mechanic">මැකෑනික්</option>
+            </select>
+
+          </div>
+
+
+          <div class="field" id="gMachineTypeWrap">
+
+            <label>Machine වර්ගය</label>
+
+            <select id="gMachineType">
+              <option>4-Wheel Tractor</option>
+              <option>2-Wheel Tractor</option>
+              <option>Small Tractor</option>
+              <option>Harvester</option>
+            </select>
+
+          </div>
+
+
+          <div class="field" id="gMachineNoWrap">
+
+            <label>Machine අංකය</label>
+
+            <input id="gMachineNo" placeholder="උදා: WP-KA-1234">
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Title / විස්තරය</label>
+
+            <input
+              id="gTitle"
+              required
+              placeholder="උදා: 4-Wheel Tractor Service"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>ගාන (Rs.) — පැයට / දිනකට / සේවාවට</label>
+
+            <input
+              id="gPrice"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="උදා: 5000"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>ඔබේ නම</label>
+
+            <input id="gName" required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>NIC</label>
+
+            <input id="gNic" required>
+
+          </div>
+
+
+          <div class="two-col">
+
+            <div class="field">
+
+              <label>Phone 1</label>
+
+              <input id="gPhone1" required>
+
+            </div>
+
+            <div class="field">
+
+              <label>Phone 2</label>
+
+              <input id="gPhone2">
+
+            </div>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>ලිපිනය</label>
+
+            <input id="gAddress" required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>වැඩ අරඹන දිනය</label>
+
+            <input id="gDate" type="date" required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              ප්‍රදේශය (නම type කර සොයන්න, හෝ map එක click කර location එක සලකුණු කරන්න)
+            </label>
+
+            <div class="loc-search-row">
+
+              <input
+                id="gLocationSearch"
+                placeholder="උදා: අම්පාර, මොණරාගල, මහඔය..."
+              >
+
+              <div class="loc-search-btns">
+
+                <button
+                  type="button"
+                  class="btn light"
+                  id="gLocationSearchBtn"
+                >
+                  🔎 සොයන්න
+                </button>
+
+                <button
+                  type="button"
+                  class="btn light"
+                  id="gMyLocationBtn"
+                >
+                  📍 මගේ ස්ථානය
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="gMap"
+              class="map"
+              style="height:280px"
+            ></div>
+
+
+            <small
+              id="gLatLng"
+              style="color:#9db3a6"
+            >
+              Location එකක් තෝරා නැත
+            </small>
+
+          </div>
+
+
+          <!-- PHOTOS -->
+          <div class="field">
+
+            <label>ඡායාරූප (2-4)</label>
+
+            <input
+              id="gPhotos"
+              type="file"
+              accept="image/*"
+              multiple
+            >
+
+          </div>
+
+
+          <!-- BANK DETAILS -->
+          <div
+            style="
+              margin:16px 0;
+              padding:18px;
+              text-align:center;
+              background:rgba(51,216,150,0.08);
+              border:1px solid rgba(51,216,150,0.35);
+              border-radius:16px;
+              box-shadow:0 4px 18px rgba(0,0,0,0.15);
+            "
+          >
+
+            <div
+              style="
+                color:#33d896;
+                font-size:21px;
+                font-weight:800;
+                margin-bottom:12px;
+              "
+            >
+              🏦 Bank Details
+            </div>
+
+
+            <div
+              style="
+                color:#ffd166;
+                font-size:16px;
+                line-height:1.9;
+                font-weight:600;
+              "
+            >
+
+              🏦 Bank Name: <span style="color:#ffffff">HNB Bank</span><br>
+
+              👤 Account Name:
+              <span style="color:#ffffff">YOUR NAME</span><br>
+
+              💳 Account Number:
+              <span style="color:#ffffff">YOUR ACCOUNT NUMBER</span><br>
+
+              🏢 Branch:
+              <span style="color:#ffffff">YOUR BRANCH</span>
+
+            </div>
+
+
+            <div
+              style="
+                margin-top:12px;
+                padding-top:10px;
+                border-top:1px solid rgba(255,255,255,0.12);
+                color:#ffcf70;
+                font-size:15px;
+                font-weight:700;
+              "
+            >
+              💰 Gig Listing Fee: Rs. 1000
+            </div>
+
+
+            <div
+              style="
+                margin-top:6px;
+                color:#9db3a6;
+                font-size:13px;
+              "
+            >
+              කරුණාකර ඉහත ගිණුමට Rs.1000 ගෙවා Receipt එක පහළින් Upload කරන්න.
+            </div>
+
+          </div>
+
+
+          <!-- BANK RECEIPT -->
+          <div class="field">
+
+            <label id="gReceiptLabel">
+              Bank Receipt (Gig Listing Fee — සියලුම සේවා සඳහා අනිවාර්යයි)
+            </label>
+
+            <input
+              id="gReceipt"
+              type="file"
+              accept="image/*"
+              required
+            >
+
+          </div>
+
+
+          <button
+            class="btn primary"
+            style="width:100%"
+            type="submit"
+            id="gigSubmitBtn"
+          >
+            Gig එක Submit කරන්න (Admin review සඳහා)
+          </button>
+
+
+          <button
+            class="btn light"
+            style="width:100%;margin-top:8px"
+            type="button"
+            id="gigCancelEditBtn"
+            hidden
+          >
+            Edit එක අවලංගු කරන්න
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+    <!-- ORDERS -->
+    <section class="tab-panel hidden" id="tab-orders">
+
+      <div class="section-heading-row">
+
+        <h2 style="color:#33d896">
+          📥 Orders (මගේ Gigs සඳහා Booking Requests)
+        </h2>
+
+        <button
+          class="btn light"
+          type="button"
+          id="downloadBookingsPdf"
+        >
+          ⬇️ Booking PDF
+        </button>
+
+      </div>
+
+      <div id="ordersList" class="list"></div>
+
+    </section>
+
+
+    <!-- TODAY WORKS -->
+    <section class="tab-panel hidden" id="tab-today">
+
+      <h2 style="color:#33d896">
+        📍 Today Works — අද කරන වැඩ
+      </h2>
+
+      <p class="muted">
+        ඔබ අද වැඩ කරන කුඹුරේ location pin කරන්න හෝ Live Location දාන්න.
+        එවිට booking කළ ගොවියාට machine එක දැන් තියෙන තැන map එකෙන් බලන්න පුළුවන්.
+      </p>
+
+
+      <div class="card">
+
+        <div class="two-col">
+
+          <div class="field">
+
+            <label>Booking / ගොවියා</label>
+
+            <select id="todayBooking">
+
+              <option value="">
+                Booking එකක් තෝරන්න
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>ගොවියාගේ නම</label>
+
+            <input
+              id="todayFarmerName"
+              placeholder="Booking එකෙන් auto"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>වැඩ කරන ස්ථානය</label>
+
+          <input
+            id="todayLocationName"
+            placeholder="උදා: මහඔය කුඹුර"
+          >
+
+        </div>
+
+
+        <div class="today-location-actions">
+
+          <button
+            class="btn primary"
+            type="button"
+            id="todayLiveBtn"
+          >
+            📍 Live Location Start
+          </button>
+
+          <button
+            class="btn light"
+            type="button"
+            id="todayPinBtn"
+          >
+            📌 Map එකේ Pin කරන්න
+          </button>
+
+          <button
+            class="btn light"
+            type="button"
+            id="todayStopBtn"
+          >
+            ⏹ Stop
+          </button>
+
+        </div>
+
+
+        <div
+          id="todayMap"
+          class="map"
+          style="height:320px;margin-top:12px"
+        ></div>
+
+
+        <small
+          id="todayCoords"
+          class="muted"
+        >
+          Location එකක් තෝරා නැත
+        </small>
+
+
+        <button
+          class="btn primary"
+          type="button"
+          id="todaySaveBtn"
+          style="width:100%;margin-top:12px"
+        >
+          Today Work Save කරන්න
+        </button>
+
+      </div>
+
+
+      <div
+        id="todayWorksList"
+        class="list"
+        style="margin-top:14px"
+      ></div>
+
+    </section>
+
+
+    <!-- NOTIFICATIONS -->
+    <section class="tab-panel hidden" id="tab-notifications">
+
+      <h2 style="color:#33d896">
+        🔔 Notifications
+      </h2>
+
+      <div
+        id="notificationsList"
+        class="list"
+      ></div>
+
+    </section>
+
+
+    <!-- CHAT -->
+    <section class="tab-panel hidden" id="tab-chat">
+
+      <div class="section-heading-row">
+
+        <h2 style="color:#33d896">
+          💬 Live Chat — Admin සමඟ
+        </h2>
+
+        <button
+          class="btn danger"
+          type="button"
+          id="dashChatDeleteAll"
+        >
+          🗑️ සියල්ල Delete
+        </button>
+
+      </div>
+
+
+      <div class="chat-box card">
+
+        <div
+          id="dashChatMessages"
+          class="chat-messages"
+        ></div>
+
+
+        <form
+          id="dashChatForm"
+          class="chat-compose"
+        >
+
+          <input
+            id="dashChatText"
+            placeholder="Adminට message එකක් ලියන්න..."
+            autocomplete="off"
+          >
+
+
+          <input
+            id="dashChatPhoto"
+            type="file"
+            accept="image/*"
+            hidden
+          >
+
+
+          <button
+            class="btn light"
+            type="button"
+            id="dashChatPhotoBtn"
+          >
+            📷
+          </button>
+
+
+          <button
+            class="btn primary"
+          >
+            Send
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script src="js/header.js"></script>
+
+<script src="js/app.js"></script>
+
+<script
+  type="module"
+  src="js/auth.js"
+></script>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+<script
+  type="module"
+  src="js/dashboard.js"
+></script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+></script>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(err => console.warn("PWA service worker:", err)));
+}
+</script>
+</body>
+</html>

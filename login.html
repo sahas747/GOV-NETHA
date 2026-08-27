@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="si">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ගොවි නෙත | Login</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem("goviTheme")||"light";</script><link rel="stylesheet" href="css/style.css">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<meta name="theme-color" content="#0b7a3b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ගොවි නෙත">
+</head>
+<body>
+<div id="siteHeader"></div>
+<main class="section">
+  <div class="container" style="max-width:560px">
+    <div class="card">
+      <img src="assets/logo.png" style="width:150px;height:110px;object-fit:contain;display:block;margin:auto" alt="ගොවි නෙත">
+      <h2 style="text-align:center;color:#00ff2ac5">ගොවි නෙතට Login වන්න</h2>
+      <p style="text-align:center;color:#ff7402">Google account එකෙන් Login වන්න. පළමු Google login එකේදී නම + phone number එක එක් වරක් save කරගනී.</p>
+
+      <button id="googleLoginBtn" class="btn primary" type="button" style="width:100%;font-size:16px;padding:14px">
+        🌐 Continue with Google
+      </button>
+
+      <div class="notice" style="margin-top:18px">
+        <b>📱 Phone Number</b><br>
+        Phone number එක OTP මගින් verify කරන්නේ නැහැ. Google account එකෙන් පළමු වතාවට Login වන විට නම සහ phone number එක එක් වරක් පමණක් save කරගන්නවා.
+      </div>
+      <div class="notice" style="margin-top:12px">
+        <b>Login</b><br>
+        එකම Google account එක භාවිතා කරන්න. ඔබේ නම සහ phone number එක පළමු login එකේදී save වූ පසු නැවත ඇතුළත් කරන්න අවශ්‍ය නැහැ.
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- First-time role picker -->
+<div class="modal" id="rolePicker">
+  <div class="modal-box" style="text-align:center">
+    <h2>ඔබ කවුද?</h2>
+    <p style="color:#9db3a6">මේ Gmail එකෙන් පළමු වතාවට login වන විට පමණක් ඔබේ නම සහ phone number එක save කරන්න.</p>
+    <div class="two-col" style="text-align:left;margin-top:14px">
+      <div class="field"><label>ඔබේ නම</label><input id="firstLoginName" placeholder="සම්පූර්ණ නම"></div>
+      <div class="field"><label>Phone Number</label><input id="firstLoginPhone" placeholder="07XXXXXXXX"></div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:15px">
+      <button id="farmerRoleBtn" class="btn primary" style="flex:1;padding:18px" type="button">👨‍🌾<br>ගොවියෙක්</button>
+      <button id="ownerRoleBtn" class="btn gold" style="flex:1;padding:18px" type="button">🚜<br>වයාපාරිකයා</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="js/header.js"></script>
+<script src="js/app.js"></script>
+<script type="module">
+import "./js/auth.js";
+
+const byId = (id) => document.getElementById(id);
+byId("googleLoginBtn")?.addEventListener("click", () => window.loginWithGoogle?.());
+byId("farmerRoleBtn")?.addEventListener("click", () => window.chooseRole?.("farmer"));
+byId("ownerRoleBtn")?.addEventListener("click", () => window.chooseRole?.("owner"));
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(err => console.warn("PWA service worker:", err)));
+}
+</script>
+</body>
+</html>

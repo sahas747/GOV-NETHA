@@ -1,0 +1,24 @@
+{
+  "name": "ගොවි නෙත | Govi Netha",
+  "short_name": "ගොවි නෙත",
+  "description": "ශ්‍රී ලංකාවේ ගොවීන් සඳහා කෘෂි සේවා, booking සහ කාලගුණ platform එක.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b7a3b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

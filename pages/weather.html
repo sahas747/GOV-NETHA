@@ -1,0 +1,30 @@
+<!doctype html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ගොවි නෙත LK | කාලගුණය (Weather)</title><script>document.documentElement.dataset.theme=localStorage.getItem("goviTheme")||"light";</script><link rel="stylesheet" href="../css/style.css"></head><body><div id="siteHeader"></div>
+<main>
+<div class="container page-head"><span class="badge">🌦️ Weather Service</span><h1>කාලගුණය (Weather)</h1><p>ඔබේ ප්‍රදේශයේ live කාලගුණ තොරතුරු, දින 7ක අනාවැකිය සහ Windy interactive map එක බලන්න.</p></div>
+<div class="container">
+  <div class="weather-search-wrap">
+    <form class="weather-search-bar" id="weatherSearchForm">
+      <input id="weatherSearchInput" placeholder="නගරය, දිස්ත්‍රික්කය හෝ ගම්මානය සොයන්න... (උදා: මහනුවර, අනුරාධපුරය)" autocomplete="off">
+      <button type="submit">🔎</button>
+    </form>
+    <div class="weather-suggestions hidden" id="weatherSuggestions"></div>
+  </div>
+
+  <div class="weather-glass" id="weatherPageCurrent"><div class="weather-loading">⛅ ඔබේ ස්ථානය සොයමින්... GPS අවසර ලබා දෙන්න.</div></div>
+
+  <div class="advisory-card hidden" id="weatherPageAdvisory"></div>
+
+  <div class="section-title" style="margin-top:36px"><h2>📅 දින 7ක අනාවැකිය</h2><p>ඉදිරි සතියේ උෂ්ණත්වය සහ වැසි ඉඩකඩ</p></div>
+  <div class="forecast-strip" id="weatherForecastStrip"></div>
+
+  <div class="section-title" style="margin-top:36px"><h2>🗺️ Windy Interactive Map</h2><p>Zoom කර, ඉහළ දකුණේ ඇති layer menu එකෙන් Rain / Wind / Temperature / Clouds අතර මාරු වෙන්න.</p></div>
+  <div class="windy-embed-wrap"><iframe id="windyFrame" src="" loading="lazy" allowfullscreen title="Windy interactive weather map"></iframe></div>
+</div>
+</main>
+<div id="toast" class="toast"></div>
+<script src="../js/header.js"></script><script src="../js/app.js"></script>
+<script type="module">
+import { initWeatherPage } from "../js/weather.js";
+initWeatherPage();
+</script>
+</body></html>
